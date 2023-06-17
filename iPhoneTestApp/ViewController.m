@@ -12,13 +12,48 @@
 
 @implementation RCTUITextView {}
 
+- (void)_restoreTextSelection
+{
+  UITextRange *range = self.selectedTextRange;
+  /*
+  auto start = [self positionFromPosition:self.beginningOfDocument
+                                                   offset:selection->start];
+  auto end = [_backedTextInputView positionFromPosition:_backedTextInputView.beginningOfDocument offset:selection->end];
+  auto range = [_backedTextInputView textRangeFromPosition:start toPosition:end];
+  [_backedTextInputView setSelectedTextRange:range notifyDelegate:YES];
+   */
+}
+
+
 -(void)textViewDidChange:(UITextView *)textView
 {
+  // disable scroll to avoid issue #
+  textView.scrollEnabled = false;
   NSLog(@"textViewDidChange : %@",textView.text);
   NSMutableDictionary<NSAttributedStringKey, id> *attributes = [NSMutableDictionary dictionaryWithCapacity:10];
   attributes[NSForegroundColorAttributeName] = [UIColor blueColor];
   NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:textView.text attributes: attributes];
-  [textView setAttributedText: attributedString];
+
+  // save cursor position
+  UITextRange *selectedRange = self.selectedTextRange;
+  NSInteger oldTextLength = self.attributedText.string.length;
+
+  // [textView setAttributedText: attributedString];
+  self.text = textView.text;
+
+  // restore cursor position
+  if (selectedRange.empty) {
+    // Maintaining a cursor position relative to the end of the old text.
+    NSInteger offsetStart = [self offsetFromPosition:self.beginningOfDocument
+                                          toPosition:selectedRange.start];
+    NSInteger offsetFromEnd = oldTextLength - offsetStart;
+    NSInteger newOffset = textView.text.length - offsetFromEnd;
+    UITextPosition *position = [self positionFromPosition:self.beginningOfDocument
+                                                   offset:newOffset];
+    [self setSelectedTextRange:[self textRangeFromPosition:position toPosition:position]];
+  }
+
+  textView.scrollEnabled = true;
 }
 
 @end
