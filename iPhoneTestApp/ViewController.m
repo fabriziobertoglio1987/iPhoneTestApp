@@ -38,8 +38,7 @@
   UITextRange *selectedRange = self.selectedTextRange;
   NSInteger oldTextLength = self.attributedText.string.length;
 
-  // [textView setAttributedText: attributedString];
-  self.text = textView.text;
+  [textView setAttributedText: attributedString];
 
   // restore cursor position
   if (selectedRange.empty) {
