@@ -27,14 +27,16 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  NSNumber *lineHeight = @10;
-  NSNumber *fontLineHeight = nil;
-  NSLog(@"lineHeight is %@ and fontLineHeight is %@", lineHeight, fontLineHeight);
-  if (lineHeight >= fontLineHeight) {
-    NSLog(@"true");
-  } else {
-    NSLog(@"false");
-  }
+  // Do any additional setup after loading the view.
+  UITextView *textView = [[UITextView alloc] initWithFrame:CGRectMake(10, 200, 300, 150)];
+  UIView *redBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height / 2.0)];
+  redBackgroundView.backgroundColor = [UIColor redColor];
+  [self.view addSubview:redBackgroundView];
+  NSMutableDictionary<NSAttributedStringKey, id> *attributes = [NSMutableDictionary dictionaryWithCapacity:10];
+  attributes[NSForegroundColorAttributeName] = [UIColor blueColor];
+  NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"my test attributed string" attributes: attributes];
+  textView.attributedText = attributedString;
+  [redBackgroundView addSubview:textView];
 }
 
 
