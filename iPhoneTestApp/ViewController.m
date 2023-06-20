@@ -15,10 +15,8 @@
 -(void)textViewDidChange:(UITextView *)textView
 {
   NSLog(@"textViewDidChange : %@",textView.text);
-  NSMutableDictionary<NSAttributedStringKey, id> *attributes = [NSMutableDictionary dictionaryWithCapacity:10];
-  attributes[NSForegroundColorAttributeName] = [UIColor blueColor];
-  NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:textView.text attributes: attributes];
-  [textView setAttributedText: attributedString];
+  NSString *newText = [NSString stringWithFormat:@"%@/%@/%@", textView.text, @"e"];
+  textView.text = newText;
 }
 
 @end
