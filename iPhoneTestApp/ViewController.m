@@ -12,34 +12,22 @@
 
 @implementation RCTUITextView {}
 
-- (void)_restoreTextSelection
-{
-  UITextRange *range = self.selectedTextRange;
-  /*
-  auto start = [self positionFromPosition:self.beginningOfDocument
-                                                   offset:selection->start];
-  auto end = [_backedTextInputView positionFromPosition:_backedTextInputView.beginningOfDocument offset:selection->end];
-  auto range = [_backedTextInputView textRangeFromPosition:start toPosition:end];
-  [_backedTextInputView setSelectedTextRange:range notifyDelegate:YES];
-   */
-}
-
-
 -(void)textViewDidChange:(UITextView *)textView
 {
   // disable scroll to avoid issue #
-  textView.scrollEnabled = false;
+  // textView.scrollEnabled = false;
   NSLog(@"textViewDidChange : %@",textView.text);
   NSMutableDictionary<NSAttributedStringKey, id> *attributes = [NSMutableDictionary dictionaryWithCapacity:10];
   attributes[NSForegroundColorAttributeName] = [UIColor blueColor];
   NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:textView.text attributes: attributes];
 
   // save cursor position
-  UITextRange *selectedRange = self.selectedTextRange;
-  NSInteger oldTextLength = self.attributedText.string.length;
+  // UITextRange *selectedRange = self.selectedTextRange;
+  // NSInteger oldTextLength = self.attributedText.string.length;
 
   [textView setAttributedText: attributedString];
 
+  /*
   // restore cursor position
   if (selectedRange.empty) {
     // Maintaining a cursor position relative to the end of the old text.
@@ -53,6 +41,7 @@
   }
 
   textView.scrollEnabled = true;
+  */
 }
 
 @end
