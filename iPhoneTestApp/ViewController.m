@@ -23,17 +23,12 @@
       if ([value isKindOfClass:[NSParagraphStyle class]]) {
         NSMutableParagraphStyle *style = [value mutableCopy];
         // enable one of this changes to the attributes to reproduce the issue
-        // style.minimumLineHeight = 20;
+        style.minimumLineHeight = 20;
         // [attributedStringCopy addAttribute:NSForegroundColorAttributeName value:[UIColor greenColor] range:range];
         [attributedStringCopy addAttribute:NSParagraphStyleAttributeName value:style range:range];
       }
     }];
     [textView setAttributedText: attributedStringCopy];
-  } else {
-    NSMutableDictionary<NSAttributedStringKey, id> *attributes = [NSMutableDictionary dictionaryWithCapacity:10];
-    attributes[NSForegroundColorAttributeName] = [UIColor redColor];
-    NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:textView.text attributes: attributes];
-    [textView setAttributedText:attributedString];
   }
 }
 
